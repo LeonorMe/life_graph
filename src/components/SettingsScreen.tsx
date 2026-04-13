@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronLeft, Plus, Trash2 } from 'lucide-react';
-import { EMOJIS, GoalEntry, MoodValue, NotificationSettings } from '../store/dataStore';
+import { EMOJIS, type GoalEntry, type MoodValue, type NotificationSettings } from '../store/dataStore';
 import { format } from 'date-fns';
 
 interface SettingsScreenProps {

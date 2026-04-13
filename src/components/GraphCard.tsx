@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { format, subDays, subMonths, isAfter, startOfDay, subYears } from 'date-fns';
-import { MoodEntry, GoalEntry, EMOJIS, MoodValue } from '../store/dataStore';
+import { EMOJIS, type MoodEntry, type GoalEntry, type MoodValue } from '../store/dataStore';
 import { Settings as SettingsIcon } from 'lucide-react';
 
 interface GraphCardProps {

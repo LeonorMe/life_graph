@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EMOJIS, MoodValue } from '../store/dataStore';
+import { EMOJIS, type MoodValue } from '../store/dataStore';
 
 interface MoodLogProps {
   onLogMood: (value: MoodValue) => void;
