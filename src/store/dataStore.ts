@@ -29,6 +29,18 @@ export interface NotificationSettings {
   endHour: number; // 0-23
 }
 
+// Helper to generate IDs safely (crypto.randomUUID can fail in non-secure contexts or older mobile browsers)
+function generateId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    try {
+      return crypto.randomUUID();
+    } catch (e) {
+      // Fallback
+    }
+  }
+  return Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+}
+
 // Local Storage Keys
 const MOODS_KEY = 'emotions_graph_moods';
 const GOALS_KEY = 'emotions_graph_goals';
@@ -55,7 +67,7 @@ export function useMoods() {
 
   const addMood = (value: MoodValue) => {
     const newEntry: MoodEntry = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       timestamp: Date.now(),
       value,
     };
@@ -75,7 +87,7 @@ export function useGoals() {
   }, []);
 
   const addGoal = (entry: Omit<GoalEntry, 'id'>) => {
-    const newGoal = { ...entry, id: crypto.randomUUID() };
+    const newGoal = { ...entry, id: generateId() };
     const updated = [...goals, newGoal];
     setGoals(updated);
     setStorage(GOALS_KEY, updated);
@@ -113,4 +125,50 @@ export function useSettings() {
   };
 
   return { settings, updateSettings };
+}
+
+// Global Backup Utilities
+export function exportData() {
+  const data = {
+    moods: getStorage(MOODS_KEY, []),
+    goals: getStorage(GOALS_KEY, []),
+    settings: getStorage(NOTIFICATIONS_KEY, {})
+  };
+  
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `syncvibe_backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+export async function importData(file: File): Promise<boolean> {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const data = JSON.parse(content);
+        
+        if (data.moods) setStorage(MOODS_KEY, data.moods);
+        if (data.goals) setStorage(GOALS_KEY, data.goals);
+        if (data.settings) setStorage(NOTIFICATIONS_KEY, data.settings);
+        
+        resolve(true);
+      } catch (err) {
+        console.error('Import failed', err);
+        resolve(false);
+      }
+    };
+    reader.onerror = () => resolve(false);
+    reader.readAsText(file);
+  });
+}
+
+export function clearAllData() {
+  localStorage.removeItem(MOODS_KEY);
+  localStorage.removeItem(GOALS_KEY);
+  localStorage.removeItem(NOTIFICATIONS_KEY);
 }

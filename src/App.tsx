@@ -17,6 +17,8 @@ function App() {
     let intervalId: ReturnType<typeof setInterval>;
 
     const checkAndNotify = () => {
+      if (typeof Notification === 'undefined') return;
+      
       const now = new Date();
       const hour = now.getHours();
 

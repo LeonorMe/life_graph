@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ChevronLeft, Plus, Trash2 } from 'lucide-react';
-import { EMOJIS, type GoalEntry, type MoodValue, type NotificationSettings } from '../store/dataStore';
+import { ChevronLeft, Plus, Trash2, Download, Upload, ShieldAlert, Database } from 'lucide-react';
+import { EMOJIS, type GoalEntry, type MoodValue, type NotificationSettings, exportData, importData, clearAllData } from '../store/dataStore';
 import { format } from 'date-fns';
 
 interface SettingsScreenProps {
@@ -158,6 +158,55 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
                </div>
              ))
           )}
+        </div>
+      </div>
+
+      <div className="glass-panel" style={{ padding: '1.5rem' }}>
+        <h3 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Database size={20} /> Data & Privacy
+        </h3>
+        <p className="text-muted" style={{ fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+          Your data is stored locally on this device. You can export it to a file for backup or import it later.
+        </p>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <button className="btn-primary" style={{ background: 'var(--bg-panel)', border: '1px solid var(--border-color)', color: 'var(--text-main)' }} onClick={() => exportData()}>
+            <Download size={20} /> Export Backup (.json)
+          </button>
+          
+          <label className="btn-primary" style={{ background: 'var(--bg-panel)', border: '1px solid var(--border-color)', color: 'var(--text-main)', cursor: 'pointer' }}>
+            <Upload size={20} /> Import Backup (.json)
+            <input 
+              type="file" 
+              accept=".json" 
+              style={{ display: 'none' }} 
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const success = await importData(file);
+                  if (success) {
+                    alert('Data imported successfully! Refreshing...');
+                    window.location.reload();
+                  } else {
+                    alert('Failed to import data. Please ensure the file is a valid SyncVibe backup.');
+                  }
+                }
+              }}
+            />
+          </label>
+
+          <button 
+            className="btn-primary" 
+            style={{ marginTop: '1rem', background: 'rgba(239, 68, 68, 0.1)', color: 'var(--danger)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+            onClick={() => {
+              if (confirm('Are you absolutely sure you want to delete ALL your data? This cannot be undone.')) {
+                clearAllData();
+                window.location.reload();
+              }
+            }}
+          >
+            <ShieldAlert size={20} /> Clear All Data
+          </button>
         </div>
       </div>
     </div>
