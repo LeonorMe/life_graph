@@ -87,8 +87,8 @@ export function GraphCard({ moods, goals, onOpenSettings }: GraphCardProps) {
               </defs>
               <XAxis dataKey="dateFormatted" stroke="var(--text-muted)" fontSize={12} tickLine={false} axisLine={false} />
               <YAxis 
-                domain={[1, 6]} 
-                ticks={[1, 2, 3, 4, 5, 6]} 
+                domain={[1, 7]} 
+                ticks={[1, 2, 3, 4, 5, 6, 7]} 
                 stroke="var(--text-muted)" 
                 fontSize={16} 
                 tickLine={false} 

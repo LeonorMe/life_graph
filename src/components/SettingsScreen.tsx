@@ -15,7 +15,7 @@ interface SettingsScreenProps {
 export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, settings, onUpdateSettings }: SettingsScreenProps) {
   const [newGoalDate, setNewGoalDate] = useState('');
   const [newGoalInfo, setNewGoalInfo] = useState('');
-  const [newGoalEmoji, setNewGoalEmoji] = useState<MoodValue>(6);
+  const [newGoalEmoji, setNewGoalEmoji] = useState<MoodValue>(7);
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
 
     setNewGoalDate('');
     setNewGoalInfo('');
-    setNewGoalEmoji(6);
+    setNewGoalEmoji(7);
   };
 
   const handleSettingsChange = (field: keyof NotificationSettings, val: any) => {

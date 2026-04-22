@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 
-export type MoodValue = 1 | 2 | 3 | 4 | 5 | 6;
+export type MoodValue = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export const EMOJIS: Record<MoodValue, string> = {
   1: '😢', // Sadness
   2: '😨', // Fear
   3: '😠', // Anger
   4: '🤢', // Disgust
-  5: '😲', // Surprise
-  6: '😊', // Happiness
+  5: '😐', // Neutral
+  6: '😲', // Surprise
+  7: '😊', // Happiness
 };
 
 export interface MoodEntry {
