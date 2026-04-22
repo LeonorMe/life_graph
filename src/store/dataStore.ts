@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 
-export type MoodValue = 1 | 2 | 3 | 4 | 5;
+export type MoodValue = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const EMOJIS: Record<MoodValue, string> = {
-  1: '😢',
-  2: '😕',
-  3: '😐',
-  4: '🙂',
-  5: '🤩',
+  1: '😢', // Sadness
+  2: '😨', // Fear
+  3: '😠', // Anger
+  4: '🤢', // Disgust
+  5: '😲', // Surprise
+  6: '😊', // Happiness
 };
 
 export interface MoodEntry {
@@ -48,8 +49,14 @@ const NOTIFICATIONS_KEY = 'emotions_graph_notifications';
 
 // Helper to get from local storage
 function getStorage<T>(key: string, defaultValue: T): T {
-  const data = localStorage.getItem(key);
-  return data ? JSON.parse(data) : defaultValue;
+  try {
+    const data = localStorage.getItem(key);
+    if (!data) return defaultValue;
+    return JSON.parse(data);
+  } catch (err) {
+    console.error(`Error reading from localStorage key "${key}":`, err);
+    return defaultValue;
+  }
 }
 
 // Helper to set to local storage
@@ -62,7 +69,11 @@ export function useMoods() {
   const [moods, setMoods] = useState<MoodEntry[]>([]);
 
   useEffect(() => {
-    setMoods(getStorage<MoodEntry[]>(MOODS_KEY, []));
+    const stored = getStorage<MoodEntry[]>(MOODS_KEY, []);
+    // Simple validation: ensure it's an array
+    if (Array.isArray(stored)) {
+      setMoods(stored);
+    }
   }, []);
 
   const addMood = (value: MoodValue) => {
@@ -83,7 +94,11 @@ export function useGoals() {
   const [goals, setGoals] = useState<GoalEntry[]>([]);
 
   useEffect(() => {
-    setGoals(getStorage<GoalEntry[]>(GOALS_KEY, []));
+    const stored = getStorage<GoalEntry[]>(GOALS_KEY, []);
+    // Simple validation: ensure it's an array
+    if (Array.isArray(stored)) {
+      setGoals(stored);
+    }
   }, []);
 
   const addGoal = (entry: Omit<GoalEntry, 'id'>) => {
@@ -116,7 +131,8 @@ export function useSettings() {
   });
 
   useEffect(() => {
-    setSettings(getStorage<NotificationSettings>(NOTIFICATIONS_KEY, settings));
+    const stored = getStorage<Partial<NotificationSettings>>(NOTIFICATIONS_KEY, {});
+    setSettings(prev => ({ ...prev, ...stored }));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateSettings = (newSettings: NotificationSettings) => {

@@ -17,13 +17,16 @@ function App() {
     let intervalId: ReturnType<typeof setInterval>;
 
     const checkAndNotify = () => {
-      if (typeof Notification === 'undefined') return;
+      if (typeof Notification === 'undefined' || !settings) return;
       
       const now = new Date();
       const hour = now.getHours();
 
-      // Check if within allowed hours
-      if (hour >= settings.startHour && hour < settings.endHour) {
+      // Check if within allowed hours (with defaults just in case)
+      const startHour = settings.startHour ?? 9;
+      const endHour = settings.endHour ?? 22;
+
+      if (hour >= startHour && hour < endHour) {
         // Find if we already logged in the last 2 hours (avoid spamming)
         const lastMood = moods.length > 0 ? moods[moods.length - 1] : null;
         const timeSinceLastLog = lastMood ? now.getTime() - lastMood.timestamp : Infinity;

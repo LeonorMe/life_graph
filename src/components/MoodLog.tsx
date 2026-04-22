@@ -24,8 +24,10 @@ export function MoodLog({ onLogMood }: MoodLogProps) {
       <h3 style={{ textAlign: 'center', margin: 0, fontWeight: 500 }}>How are you feeling right now?</h3>
       
       <div style={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem' }}>
-        {(Object.keys(EMOJIS) as unknown as MoodValue[]).map((val) => {
-          const numValue = Number(val) as MoodValue;
+        {(Object.keys(EMOJIS) as unknown as MoodValue[])
+          .sort((a, b) => Number(b) - Number(a))
+          .map((val) => {
+            const numValue = Number(val) as MoodValue;
           return (
             <button
               key={val}

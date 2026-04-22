@@ -15,7 +15,7 @@ interface SettingsScreenProps {
 export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, settings, onUpdateSettings }: SettingsScreenProps) {
   const [newGoalDate, setNewGoalDate] = useState('');
   const [newGoalInfo, setNewGoalInfo] = useState('');
-  const [newGoalEmoji, setNewGoalEmoji] = useState<MoodValue>(5);
+  const [newGoalEmoji, setNewGoalEmoji] = useState<MoodValue>(6);
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +33,7 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
 
     setNewGoalDate('');
     setNewGoalInfo('');
-    setNewGoalEmoji(5);
+    setNewGoalEmoji(6);
   };
 
   const handleSettingsChange = (field: keyof NotificationSettings, val: any) => {
@@ -116,8 +116,10 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
           <div>
             <label className="text-muted" style={{ fontSize: '0.75rem', display: 'block', marginBottom: '0.25rem' }}>Expected Feeling</label>
             <div style={{ display: 'flex', gap: '0.25rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
-              {(Object.keys(EMOJIS) as unknown as MoodValue[]).map((val) => {
-                const numValue = Number(val) as MoodValue;
+              {(Object.keys(EMOJIS) as unknown as MoodValue[])
+                .sort((a, b) => Number(b) - Number(a))
+                .map((val) => {
+                  const numValue = Number(val) as MoodValue;
                 return (
                   <button
                     key={val}
