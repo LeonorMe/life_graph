@@ -9,23 +9,23 @@ export default defineConfig({
     //   registerType: 'autoUpdate',
     //   injectRegister: 'auto',
     //   manifest: {
-    //     name: 'SyncVibe - Emotion Graph',
-    //     short_name: 'SyncVibe',
-    //     description: 'Track your emotions and future goals beautifully.',
-    //     theme_color: '#0f172a',
-    //     background_color: '#0f172a',
+    //     name: 'InnerWeather - Emotion Graph',
+    //     short_name: 'InnerWeather',
+    //     description: 'Observe how your emotions change over time beautifully.',
+    //     theme_color: '#f8fafc',
+    //     background_color: '#f8fafc',
     //     display: 'standalone',
     //     orientation: 'portrait',
     //     icons: [
     //       {
-    //         src: 'favicon.svg',
-    //         sizes: '192x192',
-    //         type: 'image/svg+xml'
+    //         src: 'icon.png',
+    //         sizes: '1024x1024',
+    //         type: 'image/png'
     //       },
     //       {
-    //         src: 'favicon.svg',
+    //         src: 'icon.png',
     //         sizes: '512x512',
-    //         type: 'image/svg+xml',
+    //         type: 'image/png',
     //         purpose: 'any maskable'
     //       }
     //     ]

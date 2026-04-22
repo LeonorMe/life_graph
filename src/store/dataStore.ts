@@ -28,6 +28,7 @@ export interface NotificationSettings {
   enabled: boolean;
   startHour: number; // 0-23
   endHour: number; // 0-23
+  theme: 'light' | 'dark';
 }
 
 // Helper to generate IDs safely (crypto.randomUUID can fail in non-secure contexts or older mobile browsers)
@@ -128,6 +129,7 @@ export function useSettings() {
     enabled: false,
     startHour: 9,
     endHour: 22,
+    theme: 'light',
   });
 
   useEffect(() => {
@@ -155,7 +157,7 @@ export function exportData() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `syncvibe_backup_${new Date().toISOString().split('T')[0]}.json`;
+  a.download = `innerweather_backup_${new Date().toISOString().split('T')[0]}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }

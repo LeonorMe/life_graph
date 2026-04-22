@@ -51,6 +51,26 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
       </div>
 
       <div className="glass-panel" style={{ padding: '1.5rem' }}>
+        <h3 style={{ marginBottom: '1rem' }}>Appearance</h3>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button 
+            className="btn-primary" 
+            style={{ flex: 1, background: settings.theme === 'light' ? 'var(--accent-color)' : 'var(--bg-panel)', color: settings.theme === 'light' ? 'white' : 'var(--text-main)' }}
+            onClick={() => handleSettingsChange('theme', 'light')}
+          >
+            Light Mode
+          </button>
+          <button 
+            className="btn-primary" 
+            style={{ flex: 1, background: settings.theme === 'dark' ? 'var(--accent-color)' : 'var(--bg-panel)', color: settings.theme === 'dark' ? 'white' : 'var(--text-main)' }}
+            onClick={() => handleSettingsChange('theme', 'dark')}
+          >
+            Dark Mode
+          </button>
+        </div>
+      </div>
+
+      <div className="glass-panel" style={{ padding: '1.5rem' }}>
         <h3 style={{ marginBottom: '1rem' }}>Notification Preferences</h3>
         <p className="text-muted" style={{ fontSize: '0.875rem', marginBottom: '1rem' }}>
           By enabling this, the app will try to notify you occasionally to log your feelings.
@@ -190,7 +210,7 @@ export function SettingsScreen({ onBack, goals, onAddGoal, onRemoveGoal, setting
                     alert('Data imported successfully! Refreshing...');
                     window.location.reload();
                   } else {
-                    alert('Failed to import data. Please ensure the file is a valid SyncVibe backup.');
+                    alert('Failed to import data. Please ensure the file is a valid InnerWeather backup.');
                   }
                 }
               }}

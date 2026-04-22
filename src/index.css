@@ -1,21 +1,40 @@
 :root {
-  --bg-dark: #0f172a;
+  /* Light Mode (Default) - Calm Wellness */
+  --bg-main: #f8fafc;
+  --bg-panel: rgba(255, 255, 255, 0.8);
+  --bg-header: rgba(248, 250, 252, 0.8);
+  --border-color: rgba(148, 163, 184, 0.2);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --accent-color: #3b82f6; /* Blue */
+  --accent-secondary: #a78bfa; /* Lavender */
+  --accent-glass: rgba(59, 130, 246, 0.1);
+  --danger: #ef4444;
+  --success: #10b981;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --gradient-bg: radial-gradient(circle at top right, #e0f2fe, #f8fafc 70%);
+}
+
+[data-theme='dark'] {
+  --bg-main: #0f172a;
   --bg-panel: rgba(30, 41, 59, 0.7);
+  --bg-header: rgba(15, 23, 42, 0.8);
   --border-color: rgba(255, 255, 255, 0.1);
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent-color: #3b82f6;
-  --accent-hover: #2563eb;
-  --accent-glass: rgba(59, 130, 246, 0.2);
-  --danger: #ef4444;
-  --success: #10b981;
+  --accent-color: #60a5fa; /* Lighter Blue for dark */
+  --accent-secondary: #c084fc; /* Lighter Lavender for dark */
+  --accent-glass: rgba(96, 165, 250, 0.2);
+  --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --gradient-bg: radial-gradient(circle at top right, #1e293b, #0f172a 70%);
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: var(--bg-dark);
+  background-color: var(--bg-main);
+  background: var(--gradient-bg);
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -23,9 +42,8 @@ body {
   justify-content: center;
   min-height: 100vh;
   min-height: 100dvh;
-  /* subtle animated gradient for aesthetic */
-  background: radial-gradient(circle at top right, #1e293b, #0f172a 70%);
   background-attachment: fixed;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {
@@ -49,11 +67,12 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: var(--card-shadow);
+  transition: background 0.3s ease, border 0.3s ease;
 }
 
 .glass-header {
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-header);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -64,6 +83,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background 0.3s ease, border 0.3s ease;
 }
 
 /* Base elements */
@@ -90,11 +110,11 @@ button:active {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 14px var(--accent-glass);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-hover);
+  filter: brightness(1.1);
 }
 
 .btn-icon {
@@ -114,14 +134,14 @@ button:active {
 }
 
 input, select, textarea {
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--bg-panel);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 0.75rem 1rem;
   border-radius: 12px;
   font-family: inherit;
   width: 100%;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
 }
 
 input:focus, select:focus, textarea:focus {
